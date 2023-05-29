@@ -1,0 +1,238 @@
+Questao 1
+def cadastrar_pessoa():
+    nome = input("Digite o nome da pessoa: ")
+    idade = int(input("Digite a idade da pessoa: "))
+    cpf = input("Digite o CPF da pessoa: ")
+    pessoa = {"Nome": nome, "Idade": idade, "CPF": cpf}
+    return pessoa
+
+def menoresdeidade(dicionario):
+    menor18 = {}
+    for cpf, pessoa in dicionario.items():
+        if pessoa["Idade"] < 18:
+            menor18[cpf] = pessoa
+    return menor18
+
+cadastro = {}
+opcao = input("Quer cadastrar uma pessoa? (S/N) ")
+while opcao.lower() == "s":
+    pessoa = cadastrar_pessoa()
+    cadastro[pessoa["CPF"]] = pessoa
+    opcao = input("Quer cadastrar outra pessoa? (S/N) ")
+
+# Separação das pessoas menores de 18 anos
+menor18 = menoresdeidade(cadastro)
+
+# Impressão dos dicionários resultantes
+print("\nDicionário de cadastro:")
+for cpf, pessoa in cadastro.items():
+    print(f"CPF: {cpf}")
+    print(f"Nome: {pessoa['Nome']}")
+    print(f"Idade: {pessoa['Idade']}")
+    print("--------------------------")
+
+print("\nDicionário de pessoas menores de 18 anos:")
+for cpf, pessoa in menor18.items():
+    print(f"CPF: {cpf}")
+    print(f"Nome: {pessoa['Nome']}")
+    print(f"Idade: {pessoa['Idade']}")
+    print("--------------------------")
+    
+    
+    Questao 2
+    
+    def fazer_backup(principal, backup):
+    backup.update(principal)
+    principal.clear()
+
+def dados(principal, backup):
+    while True:
+        chave = input("Informe a chave: ")
+        valor = input("Informe o valor: ")
+        principal[chave] = valor
+        print("Dados inseridos")
+
+        if len(principal) >= 5:
+            print("Fazendo backup.")
+            fazer_backup(principal, backup)
+
+            print("\nDicionário principal:")
+            for chave, valor in principal.items():
+                print(f"{chave}: {valor}")
+
+            print("\nDicionário de backup:")
+            for chave, valor in backup.items():
+                print(f"{chave}: {valor}")
+            break
+
+principal = {}
+backup = {}
+
+dados(principal, backup)
+
+Questao 3
+
+class Automovel:
+    def __init__(self, marca, modelo):
+        self.marca = marca
+        self.modelo = modelo
+
+    def acelerar(self):
+        pass
+
+    def frear(self):
+        pass
+
+class Carro(Automovel):
+    def __init__(self, marca, modelo, portas):
+        super().__init__(marca, modelo)
+        self.num_portas = portas
+
+    def acelerar(self):
+        print("Carro acelerando.")
+
+    def frear(self):
+        print("Carro freando.")
+
+class Caminhao(Automovel):
+    def __init__(self, marca, modelo, carga):
+        super().__init__(marca, modelo)
+        self.carga= carga
+
+    def acelerar(self):
+        print("Caminhão está acelerando.")
+
+    def frear(self):
+        print("Caminhão está freando.")
+
+class Caminhonete(Automovel):
+    def __init__(self, marca, modelo, carga):
+        super().__init__(marca, modelo)
+        self.capacidade_carga = carga
+
+    def acelerar(self):
+        print("A caminhonete está acelerando.")
+
+    def frear(self):
+        print("A caminhonete está freando.")
+
+class Moto(Automovel):
+    def __init__(self, marca, modelo, cilindradas):
+        super().__init__(marca, modelo)
+        self.cilindradas = cilindradas
+
+    def acelerar(self):
+        print("A moto está acelerando.")
+
+    def frear(self):
+        print("A moto está freando.")
+
+carro = Carro("Volkswagen", "Gol", 4)
+caminhao = Caminhao("Scania", "113", 91000)
+caminhonete = Caminhonete("Dodge Ram", "2500", 1000)
+moto = Moto("Yamaha", "Crosser", 150)
+
+automoveis = [carro, caminhao, caminhonete, moto]
+
+for veiculo in automoveis:
+    veiculo.acelerar()
+    veiculo.frear()
+    print("------------------")
+    
+Questao 4
+
+class Produto:
+    def __init__(self, nome, preco, descricao):
+        self.nome = nome
+        self.preco = preco
+        self.descricao = descricao
+
+    def desconto(self, percentual):
+        pass
+
+    def info(self):
+        pass
+
+class Livro(Produto):
+    def __init__(self, nome, preco, descricao, autor):
+        super().__init__(nome, preco, descricao)
+        self.autor = autor
+
+    def desconto(self, percentual):
+        desconto = self.preco * (percentual / 100)
+        preco_com_desconto = self.preco - desconto
+        return preco_com_desconto
+
+    def info(self):
+        print("Informações do Livro:")
+        print("Nome: ", self.nome)
+        print("Preço: ", self.preco)
+        print("Descrição: ", self.descricao)
+        print("Autor: ", self.autor)
+
+class CD(Produto):
+    def __init__(self, nome, preco, descricao, artista):
+        super().__init__(nome, preco, descricao)
+        self.artista = artista
+
+    def desconto(self, percentual):
+        desconto = self.preco * (percentual / 100)
+        preco_com_desconto = self.preco - desconto
+        return preco_com_desconto
+
+    def info(self):
+        print("Informações do CD:")
+        print("Nome: ", self.nome)
+        print("Preço: ", self.preco)
+        print("Descrição: ", self.descricao)
+        print("Artista: ", self.artista)
+
+class DVD(Produto):
+    def __init__(self, nome, preco, descricao, diretor):
+        super().__init__(nome, preco, descricao)
+        self.diretor = diretor
+
+    def desconto(self, percentual):
+        desconto = self.preco * (percentual / 100)
+        preco_com_desconto = self.preco - desconto
+        return preco_com_desconto
+
+    def info(self):
+        print("Informações do DVD:")
+        print("Nome: ", self.nome)
+        print("Preço: ", self.preco)
+        print("Descrição: ", self.descricao)
+        print("Diretor: ", self.diretor)
+
+def menu_instancia():
+    print("Menu:")
+    print("1 - Criar Livro")
+    print("2 - Criar CD")
+    print("3 - Criar DVD")
+    print("0 - Sair")
+
+    op = input("Escolha uma opção: ")
+
+    if op == "1":
+        nome = input("Digite o nome do livro: ")
+        preco = float(input("Digite o preço do livro: "))
+        descricao = input("Digite a descrição do livro: ")
+        autor = input("Digite o nome do autor do livro: ")
+        livro = Livro(nome, preco, descricao, autor)
+        livro.info()
+    elif op == "2":
+        nome = input("Digite o nome do CD: ")
+        preco = float(input("Digite o preço do CD: "))
+        descricao = input("Digite a descrição do CD: ")
+        artista = input("Digite o nome do artista do CD: ")
+        cd = CD(nome, preco, descricao, artista)
+        cd.info()
+    elif op == "3":
+        nome = input("Digite o nome do DVD: ")
+        preco = float(input("Digite o preço do DVD: "))
+        descricao = input("Digite a descrição do DVD: ")
+        diretor = input("Digite o nome do diretor do DVD: ")
+        dvd = DVD(nome, preco, descricao, diretor)
+        dvd.info()
+        
+menu_instancia()
