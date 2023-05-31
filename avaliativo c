@@ -1,0 +1,431 @@
+Questão 1
+
+Questão 2
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "funcoes.h"
+
+int main() {
+    int op;
+
+    Pilha pilha;
+    pilha.topo = NULL;
+
+    Fila fila;
+    fila.front = fila.rear = NULL;
+
+    ArvNode* raiz = NULL;
+
+    do {
+        printf("\nMain Menu (Menu Principal)\n");
+        printf("1. Executar Pilha\n");
+        printf("2. Executar Fila\n");
+        printf("3. Executar Árvore\n");
+        printf("0. Sair \n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &op);
+
+        if (op == 1) {
+            int escolhaP;
+            int item;
+
+            do {
+                printf("\nMenu da Pilha\n");
+                printf("1. Empilhar\n");
+                printf("2. Desempilhar\n");
+                printf("3. Imprimir Pilha\n");
+                printf("4. Limpar Pilha\n");
+                printf("5. Imprimir Topo da Pilha\n");
+                printf("0. Voltar\n");
+                printf("Escolha uma opção: ");
+                scanf("%d", &escolhaP);
+
+                if (escolhaP == 1) {
+                    printf("Digite um valor para empilhar: ");
+                    scanf("%d", &item);
+                    empilha(&pilha, item);
+                    printf("Valor empilhado.\n");
+                } else if (escolhaP == 2) {
+                    int desempilhado = desempilha(&pilha);
+                    if (desempilhado != -1) {
+                        printf("Valor desempilhado: %d\n", desempilhado);
+                    }
+                } else if (escolhaP == 3) {
+                    imprimir(&pilha);
+                } else if (escolhaP == 4) {
+                    limpar(&pilha);
+                } else if (escolhaP == 5) {
+                    imprimirtopo(&pilha);
+                } else if (escolhaP == 0) {
+                    printf("Voltando.\n");
+                } else {
+                    printf("Opção inválida, tente novamente.\n");
+                }
+            } while (escolhaP != 0);
+        } else if (op == 2) {
+            int escolhaF;
+            int item;
+
+            do {
+                printf("\nMenu da Fila\n");
+                printf("1. Inserir na Fila\n");
+                printf("2. Remover da Fila\n");
+                printf("3. Imprimir Fila\n");
+                printf("4. Limpar Fila\n");
+                printf("5. Valor Máximo\n");
+                printf("6. Valor Mínimo\n");
+                printf("0. Voltar\n");
+                printf("Escolha uma opção: ");
+                scanf("%d", &escolhaF);
+
+                if (escolhaF == 1) {
+                    printf("Digite um valor para inserir na fila: ");
+                    scanf("%d", &item);
+                    enfileirar(&fila, item);
+                    printf("Valor enfileirado.\n");
+                } else if (escolhaF == 2) {
+                    int desenfileirado = desenfileirar(&fila);
+                    if (desenfileirado != -1) {
+                        printf("Valor removido da fila: %d\n", desenfileirado);
+                    }
+                } else if (escolhaF == 3) {
+                    imprimirfila(&fila);
+                } else if (escolhaF == 4) {
+                    limparfila(&fila);
+                } else if (escolhaF == 5) {
+                    int max = valormaximo(&fila);
+                    if (max != -1) {
+                        printf("Valor máximo da fila: %d\n", max);
+                    }
+                } else if (escolhaF == 6) {
+                    int min = valorminimo(&fila);
+                    if (min != -1) {
+                        printf("Valor mínimo da fila: %d\n", min);
+                    }
+                } else if (escolhaF == 0) {
+                    printf("Voltando.\n");
+                } else {
+                    printf("Opção inválida, tente novamente.\n");
+                }
+            } while (escolhaF != 0);
+        } else if (op == 3) {
+            int escolhaArv;
+            int item;
+
+            do {
+                printf("\nMenu da Árvore\n");
+                printf("1. Inserir Nó\n");
+                printf("2. Buscar Nó\n");
+                printf("3. Imprimir (Direita-Raiz-Esquerda)\n");
+                printf("4. Maior Elemento\n");
+                printf("5. Remover Nó\n");
+                printf("0. Voltar\n");
+                printf("Escolha uma opção: ");
+                scanf("%d", &escolhaArv);
+
+                if (escolhaArv == 1) {
+                    printf("Digite um valor para inserir: ");
+                    scanf("%d", &item);
+                    raiz = inserir(raiz, item);
+                    printf("Nó inserido.\n");
+                } else if (escolhaArv == 2) {
+                    printf("Digite um valor para buscar: ");
+                    scanf("%d", &item);
+                    int encontrado = buscar(raiz, item);
+                    if (encontrado) {
+                        printf("Valor encontrado na árvore.\n");
+                    } else {
+                        printf("Valor não encontrado na árvore.\n");
+                    }
+                } else if (escolhaArv == 3) {
+                    printf("Direita-Raiz-Esquerda: ");
+                    dre(raiz);
+                    printf("\n");
+                } else if (escolhaArv == 4) {
+                    int max = maiorelemento(raiz);
+                    if (max != -1) {
+                        printf("Maior elemento da árvore: %d\n", max);
+                    }
+                } else if (escolhaArv == 5) {
+                    printf("Digite um valor para remover: ");
+                    scanf("%d", &item);
+                    raiz = remover(raiz, item);
+                    printf("Nó removido.\n");
+                } else if (escolhaArv == 0) {
+                    printf("Voltando.\n");
+                } else {
+                    printf("Opção inválida, tente novamente.\n");
+                }
+            } while (escolhaArv != 0);
+        } else if (op == 0) {
+            printf("Saindo...\n");
+        } else {
+            printf("Opção inválida, tente novamente.\n");
+        }
+    } while (op != 0);
+
+    return 0;
+}
+
+//funcoes.h abaixo
+
+typedef struct Node {
+    int item;
+    struct Node* prox;
+} Node;
+
+typedef struct {
+    Node* topo;
+} Pilha;
+
+// Funções da Pilha
+void empilha(Pilha* pilha, int item) {
+    Node* novo = (Node*)malloc(sizeof(Node));
+    novo->item = item;
+    novo->prox = pilha->topo;
+    pilha->topo = novo;
+}
+
+int desempilha(Pilha* pilha) {
+    if (pilha->topo == NULL) {
+        printf("A pilha está vazia.\n");
+        return -1;
+    }
+
+    int item = pilha->topo->item;
+    Node* tmp = pilha->topo;
+    pilha->topo = pilha->topo->prox;
+    free(tmp);
+    return item;
+}
+
+void imprimir(Pilha* pilha) {
+    if (pilha->topo == NULL) {
+        printf("A pilha está vazia.\n");
+        return;
+    }
+
+    Node* tmp = pilha->topo;
+    printf("Elementos da pilha: ");
+    while (tmp != NULL) {
+        printf("%d ", tmp->item);
+        tmp = tmp->prox;
+    }
+    printf("\n");
+}
+
+void limpar(Pilha* pilha) {
+    while (pilha->topo != NULL) {
+        Node* tmp = pilha->topo;
+        pilha->topo = pilha->topo->prox;
+        free(tmp);
+    }
+    printf("A pilha foi limpa.\n");
+}
+
+void imprimirtopo(Pilha* pilha) {
+    if (pilha->topo == NULL) {
+        printf("A pilha está vazia.\n");
+        return;
+    }
+    printf("Topo da pilha: %d\n", pilha->topo->item);
+}
+
+typedef struct FilaNode {
+    int item;
+    struct FilaNode* prox;
+} FilaNode;
+
+typedef struct {
+    FilaNode* front;
+    FilaNode* rear;
+} Fila;
+
+void enfileirar(Fila* fila, int item) {
+    FilaNode* novonode = (FilaNode*)malloc(sizeof(FilaNode));
+    novonode->item = item;
+    novonode->prox = NULL;
+
+    if (fila->rear == NULL) {
+        fila->front = fila->rear = novonode;
+    } else {
+        fila->rear->prox = novonode;
+        fila->rear = novonode;
+    }
+}
+
+int desenfileirar(Fila* fila) {
+    if (fila->front == NULL) {
+        printf("A fila está vazia.\n");
+        return -1;
+    }
+
+    int item = fila->front->item;
+    FilaNode* tmp = fila->front;
+    fila->front = fila->front->prox;
+
+    if (fila->front == NULL) {
+        fila->rear = NULL;
+    }
+
+    free(tmp);
+    return item;
+}
+
+void imprimirfila(Fila* fila) {
+    if (fila->front == NULL) {
+        printf("A fila está vazia.\n");
+        return;
+    }
+
+    FilaNode* tmp = fila->front;
+    printf("Elementos da fila: ");
+    while (tmp != NULL) {
+        printf("%d ", tmp->item);
+        tmp = tmp->prox;
+    }
+    printf("\n");
+}
+
+void limparfila(Fila* fila) {
+    while (fila->front != NULL) {
+        FilaNode* tmp = fila->front;
+        fila->front = fila->front->prox;
+        free(tmp);
+    }
+    fila->rear = NULL;
+    printf("A fila foi limpa.\n");
+}
+
+int valormaximo(Fila* fila) {
+    if (fila->front == NULL) {
+        printf("A fila está vazia.\n");
+        return -1;
+    }
+
+    int max = fila->front->item;
+    FilaNode* current = fila->front->prox;
+    while (current != NULL) {
+        if (current->item > max) {
+            max = current->item;
+        }
+        current = current->prox;
+    }
+    return max;
+}
+
+int valorminimo(Fila* fila) {
+    if (fila->front == NULL) {
+        printf("A fila está vazia.\n");
+        return -1;
+    }
+
+    int min = fila->front->item;
+    FilaNode* current = fila->front->prox;
+    while (current != NULL) {
+        if (current->item < min) {
+            min = current->item;
+        }
+        current = current->prox;
+    }
+    return min;
+}
+
+typedef struct ArvNode {
+    int item;
+    struct ArvNode* esquerda;
+    struct ArvNode* direita;
+} ArvNode;
+
+ArvNode* criarNo(int item) {
+    ArvNode* novoNo = (ArvNode*)malloc(sizeof(ArvNode));
+    novoNo->item = item;
+    novoNo->esquerda = NULL;
+    novoNo->direita = NULL;
+    return novoNo;
+}
+
+ArvNode* inserir(ArvNode* raiz, int item) {
+    if (raiz == NULL) {
+        return criarNo(item);
+    }
+
+    if (item < raiz->item) {
+        raiz->esquerda = inserir(raiz->esquerda, item);
+    } else if (item > raiz->item) {
+        raiz->direita = inserir(raiz->direita, item);
+    }
+
+    return raiz;
+}
+
+int buscar(ArvNode* raiz, int item) {
+    if (raiz == NULL) {
+        return 0;
+    }
+
+    if (item == raiz->item) {
+        return 1;
+    } else if (item < raiz->item) {
+        return buscar(raiz->esquerda, item);
+    } else {
+        return buscar(raiz->direita, item);
+    }
+}
+void dre(ArvNode* raiz) {
+    if (raiz != NULL) {
+        dre(raiz->direita);
+        printf("%d ", raiz->item);
+        dre(raiz->esquerda);
+    }
+}
+
+int maiorelemento(ArvNode* raiz) {
+    if (raiz == NULL) {
+        printf("A árvore está vazia.\n");
+        return -1;
+    }
+
+    while (raiz->direita != NULL) {
+        raiz = raiz->direita;
+    }
+    return raiz->item;
+}
+
+ArvNode* minimo(ArvNode* raiz) {
+    if (raiz == NULL) {
+        return NULL;
+    }
+    if (raiz->esquerda == NULL) {
+        return raiz;
+    }
+    return minimo(raiz->esquerda);
+}
+
+ArvNode* remover(ArvNode* raiz, int item) {
+    if (raiz == NULL) {
+        return raiz;
+    }
+
+    if (item < raiz->item) {
+        raiz->esquerda = remover(raiz->esquerda, item);
+    } else if (item > raiz->item) {
+        raiz->direita = remover(raiz->direita, item);
+    } else {
+        if (raiz->esquerda == NULL) {
+            ArvNode* tmp = raiz->direita;
+            free(raiz);
+            return tmp;
+        } else if (raiz->direita == NULL) {
+            ArvNode* tmp = raiz->esquerda;
+            free(raiz);
+            return tmp;
+        }
+
+        ArvNode* tmp = minimo(raiz->direita);
+        raiz->item = tmp->item;
+        raiz->direita = remover(raiz->direita, tmp->item);
+    }
+    return raiz;
+}
